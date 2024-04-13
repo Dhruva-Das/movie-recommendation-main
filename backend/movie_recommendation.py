@@ -84,23 +84,3 @@ class MovieRecommender:
             )
 
         return recommendations
-
-    def create_soup(self, x):
-        return (
-            " ".join(x["keywords"])
-            + " "
-            + " ".join(x["cast"])
-            + " "
-            + x["director"]
-            + " "
-            + " ".join(x["genres"])
-        )
-
-    def get_recommendations_by_soup(self, title_x):
-        soup_correlation = self._calculate_soup_correlation()
-        return self.get_recommendations(title_x, correlation=soup_correlation)
-
-    def _calculate_soup_correlation(self):
-        count = CountVectorizer(stop_words="english")
-        count_matrix = count.fit_transform(self.df2["soup"])
-        return cosine_similarity(count_matrix, count_matrix)
